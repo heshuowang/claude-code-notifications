@@ -1,53 +1,30 @@
-# Claude Code Notifier
+# Claude Code Notifications
 
-Sound + VS Code toast when a Claude Code instance **stops**, **asks a question**, or **needs permission**. Works across multiple Claude Code instances — they all POST to one listener.
+Sound and toast when Claude Code either: needs a permission, asks you a question, or finishes. Fires in every open Cursor/VS Code window, so you catch it wherever you're looking.
 
-## How it works
+## 1. Install the extension
 
-Extension runs a localhost HTTP server (default `127.0.0.1:47000`). Claude Code `http` hooks POST to it per event; the extension plays a sound and shows a toast. VS Code renders its own notifications, so they show even on macOS 26 where CLI banners are dropped.
-
-## Install (dev)
-
-1. Open this folder in VS Code.
-2. Press `F5` → launches an Extension Development Host with it loaded.
-
-## Install (permanent)
-
-```
-npm i -g @vscode/vsce
-cd claude-code-notifier
-vsce package
-code --install-extension claude-code-notifier-0.0.1.vsix
+```sh
+cd claude-code-notifications
+npx @vscode/vsce package --allow-missing-repository
+cursor --install-extension claude-code-notifications-0.2.2.vsix   # or: code --install-extension …
 ```
 
-## Wire up Claude Code hooks
+Then reload each window: `Cmd+Shift+P` → Reload Window.
 
-Add to `~/.claude/settings.json` (replaces the `afplay` hooks):
+## 2. Wire up the hooks
 
-```json
-"hooks": {
-  "PreToolUse": [
-    { "matcher": "AskUserQuestion|ExitPlanMode",
-      "hooks": [{ "type": "http", "url": "http://127.0.0.1:47000/ask" }] }
-  ],
-  "PermissionRequest": [
-    { "hooks": [{ "type": "http", "url": "http://127.0.0.1:47000/permission" }] }
-  ],
-  "Stop": [
-    { "hooks": [{ "type": "http", "url": "http://127.0.0.1:47000/stop" }] }
-  ]
-}
-```
+Paste this into Claude Code and it'll do it for you:
 
-Reload Claude Code (`/hooks` or restart) after editing.
+> Add HTTP hooks to my `~/.claude/settings.json`, merging into any existing `hooks` block:
+> - `PreToolUse` matching `AskUserQuestion|ExitPlanMode` → POST `http://127.0.0.1:47000/ask`
+> - `PermissionRequest` → POST `http://127.0.0.1:47000/permission`
+> - `Stop` → POST `http://127.0.0.1:47000/stop`
+
+Reload Claude Code with `/hooks` and you're done.
 
 ## Settings
 
-- `claudeNotifier.port` — listener port (default 47000). Match the hook URLs.
-- `claudeNotifier.sound` — play sound (default true).
+- `claudeNotifier.port` — listener port (default 47000). Match your hook URLs if you change it.
+- `claudeNotifier.sound` — play sound (default true; macOS `afplay` only).
 - `claudeNotifier.notification` — show toast (default true).
-
-## Notes
-
-- Sound uses macOS `afplay`. Other platforms: toast only (add a player in `extension.js` `play()`).
-- If VS Code isn't running, hooks fail silently — no sound. Keep `afplay` hooks too if you want sound when VS Code is closed.
