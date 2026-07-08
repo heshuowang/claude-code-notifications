@@ -1,6 +1,11 @@
 # Claude Code Notifications
 
-Sound and toast when Claude Code either: needs a permission, asks you a question, or finishes. Fires in every open Cursor/VS Code window, so you catch it wherever you're looking.
+Sound and toast when Claude Code needs you. Fires in every open Cursor/VS Code window, so you catch it wherever you're looking.
+
+## Sounds
+
+- 🔔 **Ping** — needs your permission, or is asking you a question
+- 🔮 **Glass** — finished, your turn
 
 ## 1. Install the extension
 
@@ -16,10 +21,12 @@ Then reload each window: `Cmd+Shift+P` → Reload Window.
 
 Paste this into Claude Code and it'll do it for you:
 
-> Add HTTP hooks to my `~/.claude/settings.json`, merging into any existing `hooks` block:
-> - `PreToolUse` matching `AskUserQuestion|ExitPlanMode` → POST `http://127.0.0.1:47000/ask`
-> - `PermissionRequest` → POST `http://127.0.0.1:47000/permission`
-> - `Stop` → POST `http://127.0.0.1:47000/stop`
+```text
+Add HTTP hooks to my ~/.claude/settings.json, merging into any existing hooks block:
+- PreToolUse matching AskUserQuestion|ExitPlanMode → POST http://127.0.0.1:47000/ask
+- PermissionRequest → POST http://127.0.0.1:47000/permission
+- Stop → POST http://127.0.0.1:47000/stop
+```
 
 Reload Claude Code with `/hooks` and you're done.
 
