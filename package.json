@@ -1,16 +1,17 @@
 {
-  "name": "claude-code-notifier",
-  "displayName": "Claude Code Notifier",
+  "name": "claude-code-notifications",
+  "displayName": "Claude Code Notifications",
   "description": "Sound + notification when a Claude Code instance stops, asks a question, or needs permission.",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "publisher": "shuowanghe",
+  "icon": "icon.png",
   "engines": { "vscode": "^1.80.0" },
   "categories": ["Other"],
   "activationEvents": ["onStartupFinished"],
   "main": "./extension.js",
   "contributes": {
     "configuration": {
-      "title": "Claude Code Notifier",
+      "title": "Claude Code Notifications",
       "properties": {
         "claudeNotifier.port": {
           "type": "number",
