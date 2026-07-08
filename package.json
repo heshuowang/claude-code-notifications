@@ -2,7 +2,7 @@
   "name": "claude-code-notifications",
   "displayName": "Claude Code Notifications",
   "description": "Sound + notification when a Claude Code instance stops, asks a question, or needs permission.",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "publisher": "shuowanghe",
   "icon": "icon.png",
   "engines": { "vscode": "^1.80.0" },

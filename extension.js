@@ -101,8 +101,8 @@ function activate(context) {
     let body = '';
     req.on('data', (chunk) => { body += chunk; });
     req.on('end', () => {
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end('ok');
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end('{}');
       let payload = {};
       if (body) { try { payload = JSON.parse(body); } catch (_) {} }
       payload.__evt = key;
