@@ -1,0 +1,33 @@
+{
+  "name": "claude-code-notifier",
+  "displayName": "Claude Code Notifier",
+  "description": "Sound + notification when a Claude Code instance stops, asks a question, or needs permission.",
+  "version": "0.2.0",
+  "publisher": "shuowanghe",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Claude Code Notifier",
+      "properties": {
+        "claudeNotifier.port": {
+          "type": "number",
+          "default": 47000,
+          "description": "Localhost port the extension listens on for Claude Code hooks."
+        },
+        "claudeNotifier.sound": {
+          "type": "boolean",
+          "default": true,
+          "description": "Play a sound on events (macOS afplay)."
+        },
+        "claudeNotifier.notification": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a VS Code notification toast on events."
+        }
+      }
+    }
+  }
+}
